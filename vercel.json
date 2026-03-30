@@ -1,7 +1,8 @@
 {
   "version": 2,
-  "buildCommand": null,
   "outputDirectory": "public",
+  "buildCommand": "",
+  "framework": null,
   "routes": [
     {
       "src": "/api/(.*)",
@@ -11,9 +12,5 @@
       "src": "/(.*)",
       "dest": "/$1"
     }
-  ],
-  "env": {
-    "OPENAI_API_KEY": "@openai-api-key",
-    "TAVILY_API_KEY": "@tavily-api-key"
-  }
+  ]
 }
