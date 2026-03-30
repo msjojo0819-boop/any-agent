@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZzARA Dream Maker - AI-Powered Dream Analysis</title>
+  <meta name="description" content="ZzARA Dream Maker - Your AI-powered dream analysis and surf spot finder. Founder sale: $199 for the first 2,000 members." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #6C3AED;
+      --primary-light: #8B5CF6;
+      --primary-dark: #5B21B6;
+      --accent: #F59E0B;
+      --accent-light: #FBBF24;
+      --bg-dark: #0F0B1A;
+      --bg-card: #1A1429;
+      --bg-card-hover: #231C36;
+      --text-primary: #F8FAFC;
+      --text-secondary: #A5B4C8;
+      --text-muted: #6B7A8D;
+      --gradient-1: linear-gradient(135deg, #6C3AED, #EC4899);
+      --gradient-2: linear-gradient(135deg, #F59E0B, #EF4444);
+      --shadow-glow: 0 0 40px rgba(108, 58, 237, 0.3);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 16px 0;
+      backdrop-filter: blur(20px);
+      background: rgba(15, 11, 26, 0.8);
+      border-bottom: 1px solid rgba(108, 58, 237, 0.1);
+    }
+
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text-primary); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: var(--gradient-1);
+      color: white;
+      box-shadow: 0 4px 20px rgba(108, 58, 237, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(108, 58, 237, 0.5);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-primary);
+      border: 2px solid rgba(108, 58, 237, 0.4);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary);
+      background: rgba(108, 58, 237, 0.1);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 160px 0 100px;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(108, 58, 237, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 100px;
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 32px;
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 10px rgba(245, 158, 11, 0.1); }
+      50% { box-shadow: 0 0 25px rgba(245, 158, 11, 0.2); }
+    }
+
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .hero h1 .gradient-text {
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-secondary);
+      max-width: 640px;
+      margin: 0 auto 40px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 64px;
+      margin-top: 80px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(108, 58, 237, 0.1);
+    }
+
+    .stat h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* Features */
+    .features {
+      padding: 100px 0;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .section-header h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .section-header p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(108, 58, 237, 0.1);
+      border-radius: 20px;
+      padding: 36px;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(108, 58, 237, 0.3);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    /* Pricing */
+    .pricing {
+      padding: 100px 0;
+    }
+
+    .pricing-card {
+      max-width: 520px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border: 2px solid var(--primary);
+      border-radius: 24px;
+      padding: 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-glow);
+    }
+
+    .pricing-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-1);
+    }
+
+    .pricing-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: var(--gradient-2);
+      border-radius: 100px;
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 24px;
+    }
+
+    .pricing-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .pricing-amount {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 4px;
+      margin: 24px 0;
+    }
+
+    .pricing-amount .currency {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .pricing-amount .price {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 4rem;
+      font-weight: 800;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .pricing-amount .period {
+      font-size: 1rem;
+      color: var(--text-muted);
+    }
+
+    .pricing-original {
+      color: var(--text-muted);
+      text-decoration: line-through;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .pricing-spots {
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 32px;
+    }
+
+    .pricing-features {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 36px;
+    }
+
+    .pricing-features li {
+      padding: 10px 0;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(108, 58, 237, 0.05);
+    }
+
+    .pricing-features li::before {
+      content: '\2713';
+      color: var(--primary-light);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    /* How it works */
+    .how-it-works {
+      padding: 100px 0;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 32px;
+      margin-top: 48px;
+    }
+
+    .step {
+      text-align: center;
+      padding: 32px 24px;
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: var(--gradient-1);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .step h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /* CTA */
+    .cta {
+      padding: 100px 0;
+      text-align: center;
+    }
+
+    .cta-box {
+      background: var(--bg-card);
+      border: 1px solid rgba(108, 58, 237, 0.2);
+      border-radius: 24px;
+      padding: 64px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at center, rgba(108, 58, 237, 0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .cta-box h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .cta-box p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      margin-bottom: 32px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Footer */
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid rgba(108, 58, 237, 0.1);
+      text-align: center;
+    }
+
+    footer p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero-stats { flex-direction: column; gap: 24px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .pricing-card { padding: 32px 24px; }
+      .cta-box { padding: 40px 24px; }
+    }
+
+    /* Animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in:nth-child(2) { animation-delay: 0.1s; }
+    .fade-in:nth-child(3) { animation-delay: 0.2s; }
+    .fade-in:nth-child(4) { animation-delay: 0.3s; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="container">
+      <div class="logo">ZzARA Dream Maker</div>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+      </ul>
+      <a href="#pricing" class="btn btn-primary" style="padding: 10px 24px; font-size: 0.9rem;">Get Started</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge fade-in">
+        <span>&#9889;</span> Founder Sale - Limited to First 2,000 Members
+      </div>
+      <h1 class="fade-in">
+        Turn Your Dreams Into<br />
+        <span class="gradient-text">Reality with AI</span>
+      </h1>
+      <p class="fade-in">
+        ZzARA Dream Maker is your AI-powered companion that analyzes, interprets,
+        and helps you act on your dreams. Powered by cutting-edge multi-agent AI frameworks.
+      </p>
+      <div class="hero-buttons fade-in">
+        <a href="#pricing" class="btn btn-primary">Join the Founder Sale &rarr;</a>
+        <a href="#features" class="btn btn-outline">Learn More</a>
+      </div>
+      <div class="hero-stats fade-in">
+        <div class="stat">
+          <h3>7+</h3>
+          <p>AI Frameworks</p>
+        </div>
+        <div class="stat">
+          <h3>24/7</h3>
+          <p>Dream Analysis</p>
+        </div>
+        <div class="stat">
+          <h3>$199</h3>
+          <p>Founder Price</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="features">
+    <div class="container">
+      <div class="section-header">
+        <h2>Powered by Advanced AI</h2>
+        <p>ZzARA Dream Maker leverages multiple AI agent frameworks to deliver the most comprehensive dream analysis available.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card fade-in">
+          <div class="feature-icon">&#129504;</div>
+          <h3>Multi-Agent Intelligence</h3>
+          <p>Built on any-agent technology supporting TinyAgent, Google ADK, LangChain, LlamaIndex, OpenAI Agents, and more.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-icon">&#127769;</div>
+          <h3>Dream Journal & Analysis</h3>
+          <p>Log your dreams and receive AI-powered interpretations with pattern recognition across your dream history.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-icon">&#128200;</div>
+          <h3>Actionable Insights</h3>
+          <p>Transform dream patterns into real-world action plans with personalized recommendations and goal tracking.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-icon">&#128270;</div>
+          <h3>Smart Web Research</h3>
+          <p>AI agents search the web for relevant dream symbolism, psychological research, and wellness resources.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-icon">&#128202;</div>
+          <h3>Evaluation Engine</h3>
+          <p>Built-in LLM-as-a-Judge evaluation ensures accurate, high-quality dream interpretations every time.</p>
+        </div>
+        <div class="feature-card fade-in">
+          <div class="feature-icon">&#128274;</div>
+          <h3>Private & Secure</h3>
+          <p>Your dreams stay yours. End-to-end encryption with no data sharing. Your most intimate thoughts are protected.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section id="how-it-works" class="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <h2>How It Works</h2>
+        <p>Three simple steps to unlock the power of your dreams.</p>
+      </div>
+      <div class="steps">
+        <div class="step fade-in">
+          <div class="step-number">1</div>
+          <h3>Record Your Dream</h3>
+          <p>Wake up and jot down your dream using text or voice. Our AI captures every detail.</p>
+        </div>
+        <div class="step fade-in">
+          <div class="step-number">2</div>
+          <h3>AI Analyzes & Interprets</h3>
+          <p>Multiple AI agents work together to decode symbolism, emotions, and recurring themes.</p>
+        </div>
+        <div class="step fade-in">
+          <div class="step-number">3</div>
+          <h3>Get Actionable Plans</h3>
+          <p>Receive personalized insights and action items to help manifest your dreams into reality.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing" class="pricing">
+    <div class="container">
+      <div class="section-header">
+        <h2>Founder Sale</h2>
+        <p>Be one of the first 2,000 members and lock in the founder price for 2 years.</p>
+      </div>
+      <div class="pricing-card fade-in">
+        <div class="pricing-badge">&#128293; Founder Special</div>
+        <h3>Founder Membership</h3>
+        <div class="pricing-original">Regular price: $499/mo</div>
+        <div class="pricing-amount">
+          <span class="currency">$</span>
+          <span class="price">199</span>
+          <span class="period">/month</span>
+        </div>
+        <div class="pricing-spots">Founder sale - only for the first 2,000 members. Rate locked for 2 years.</div>
+        <ul class="pricing-features">
+          <li>Unlimited dream analysis</li>
+          <li>Multi-agent AI interpretation engine</li>
+          <li>Dream journal with pattern tracking</li>
+          <li>Personalized action plans</li>
+          <li>Web research integration</li>
+          <li>Priority support & updates</li>
+          <li>Early access to new features</li>
+          <li>Lock in $199/mo founder rate for 2 years</li>
+        </ul>
+        <a href="#" class="btn btn-primary" style="width: 100%; justify-content: center; font-size: 1.1rem; padding: 16px 32px;" id="cta-button">
+          Claim Your Founder Spot &rarr;
+        </a>
+        <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 16px;">30-day money-back guarantee. No questions asked.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container">
+      <div class="cta-box fade-in">
+        <h2>Ready to Decode<br />Your Dreams?</h2>
+        <p>Join the founder community and start transforming your dreams into actionable reality today.</p>
+        <a href="#pricing" class="btn btn-primary" style="font-size: 1.1rem; padding: 16px 36px;">
+          Get Started for $199/mo &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 ZzARA Dream Maker. All rights reserved. Powered by any-agent AI technology.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Intersection Observer for fade-in animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+
+</body>
+</html>
