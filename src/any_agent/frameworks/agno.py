@@ -23,7 +23,6 @@ except ImportError:
 if TYPE_CHECKING:
     from agno.agent import RunOutput
     from agno.models.message import Message
-    from agno.models.metrics import Metrics
     from pydantic import BaseModel
 
 
@@ -99,56 +98,77 @@ class AnyLLM(Model):
     def invoke(
         self,
         messages: list[Message],
+        assistant_message: Message,
         response_format: Any | None = None,
         tools: list[dict[str, Any]] | None = None,
         tool_choice: str | dict[str, Any] | None = None,
-    ) -> Any:
+        run_response: RunOutput | None = None,
+        compress_tool_results: bool = False,
+    ) -> ModelResponse:
+        assistant_message.metrics.start_timer()
         completion_kwargs = self.get_request_params(tools=tools)
+        completion_kwargs["messages"] = self._format_messages(messages)
         raw_response = completion(**completion_kwargs)
+        assistant_message.metrics.stop_timer()
         return self._parse_provider_response(raw_response)
 
     async def ainvoke(
         self,
         messages: list[Message],
+        assistant_message: Message,
         response_format: Any | None = None,
         tools: list[dict[str, Any]] | None = None,
         tool_choice: str | dict[str, Any] | None = None,
-        assistant_message: Message | None = None,
         run_response: RunOutput | None = None,
-    ) -> Any:
+        compress_tool_results: bool = False,
+    ) -> ModelResponse:
+        assistant_message.metrics.start_timer()
         completion_kwargs = self.get_request_params(tools=tools)
         completion_kwargs["messages"] = self._format_messages(messages)
         raw_response = await acompletion(**completion_kwargs)
+        assistant_message.metrics.stop_timer()
         return self._parse_provider_response(raw_response)
 
     def invoke_stream(
         self,
         messages: list[Message],
+        assistant_message: Message,
         response_format: Any | None = None,
         tools: list[dict[str, Any]] | None = None,
         tool_choice: str | dict[str, Any] | None = None,
+        run_response: RunOutput | None = None,
+        compress_tool_results: bool = False,
     ) -> Any:
+        assistant_message.metrics.start_timer()
         completion_kwargs = self.get_request_params(tools=tools)
         completion_kwargs["messages"] = self._format_messages(messages)
         completion_kwargs["stream"] = True
         for chunk in completion(**completion_kwargs):
             yield self._parse_provider_response_delta(chunk)
+        assistant_message.metrics.stop_timer()
 
     async def ainvoke_stream(
         self,
         messages: list[Message],
+        assistant_message: Message,
         response_format: Any | None = None,
         tools: list[dict[str, Any]] | None = None,
         tool_choice: str | dict[str, Any] | None = None,
+        run_response: RunOutput | None = None,
+        compress_tool_results: bool = False,
     ) -> Any:
+        assistant_message.metrics.start_timer()
         completion_kwargs = self.get_request_params(tools=tools)
         completion_kwargs["messages"] = self._format_messages(messages)
         completion_kwargs["stream"] = True
         async for chunk in acompletion(**completion_kwargs):
             yield self._parse_provider_response_delta(chunk)
+        assistant_message.metrics.stop_timer()
 
     def _parse_provider_response(self, response: Any, **kwargs) -> ModelResponse:  # type: ignore[no-untyped-def]
         """Parse the provider response."""
+        from agno.models.message import MessageMetrics
+
         model_response = ModelResponse()
 
         response_message = response.choices[0].message
@@ -174,7 +194,7 @@ class AnyLLM(Model):
                 )
 
         if response.usage is not None:
-            model_response.response_usage = Metrics(
+            model_response.response_usage = MessageMetrics(
                 input_tokens=response.usage.prompt_tokens,
                 output_tokens=response.usage.completion_tokens,
                 total_tokens=response.usage.total_tokens,
@@ -231,7 +251,9 @@ class AnyLLM(Model):
                     model_response.tool_calls = processed_tool_calls
 
         if hasattr(response_delta, "usage") and response_delta.usage is not None:
-            model_response.response_usage = Metrics(
+            from agno.models.message import MessageMetrics
+
+            model_response.response_usage = MessageMetrics(
                 input_tokens=response_delta.usage.prompt_tokens,
                 output_tokens=response_delta.usage.completion_tokens,
                 total_tokens=response_delta.usage.total_tokens,
@@ -302,7 +324,7 @@ class AgnoAgent(AnyAgent):
         if not self._agent:
             error_message = "Agent not loaded. Call load_agent() first."
             raise ValueError(error_message)
-        result: RunResponse = await self._agent.arun(prompt, **kwargs)
+        result: RunOutput = await self._agent.arun(prompt, **kwargs)
         return result.content  # type: ignore[return-value]
 
     async def update_output_type_async(
