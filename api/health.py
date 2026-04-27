@@ -8,9 +8,11 @@ def handler(request):
     return {
         "statusCode": 200,
         "headers": {"Content-Type": "application/json"},
-        "body": json.dumps({
-            "status": "healthy",
-            "service": "ZzARA Dream Maker",
-            "version": "1.0.0",
-        }),
+        "body": json.dumps(
+            {
+                "status": "healthy",
+                "service": "ZzARA Dream Maker",
+                "version": "1.0.0",
+            }
+        ),
     }

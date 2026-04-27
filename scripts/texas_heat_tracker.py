@@ -19,7 +19,7 @@ class TexasHeatTracker:
 
         # 2. Calculate Depth Score (0-40 points)
         # Closer to the end of the box is better
-        depth_pct = (self.current_ticket / self.box_size)
+        depth_pct = self.current_ticket / self.box_size
         depth_score = depth_pct * 40
 
         # 3. Calculate Tease Score (0-30 points)
@@ -30,6 +30,7 @@ class TexasHeatTracker:
         # Low standard deviation in gaps means a 'Lazy' predictable shuffle
         if len(self.small_win_gaps) > 2:
             import statistics
+
             dev = statistics.stdev(self.small_win_gaps)
             # If variation is low, the rhythm is high
             rhythm_score = max(0, 30 - (dev * 2))
@@ -47,6 +48,7 @@ class TexasHeatTracker:
             rec = "COLD - Box is fresh or likely depleted."
 
         return total_score, rec
+
 
 # --- Example Usage ---
 tracker = TexasHeatTracker()

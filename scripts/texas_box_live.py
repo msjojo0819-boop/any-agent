@@ -1,5 +1,6 @@
 import random
 
+
 class TexasBoxSimulator:
     def __init__(self):
         self.total_tickets = 10000
@@ -44,13 +45,14 @@ class TexasHeatTracker:
         if self.jackpot_seen:
             return 0, "DEAD - Jackpot already pulled from this batch."
 
-        depth_pct = (self.current_ticket / self.box_size)
+        depth_pct = self.current_ticket / self.box_size
         depth_score = depth_pct * 40
 
         tease_score = min(self.near_misses * 5, 30)
 
         if len(self.small_win_gaps) > 2:
             import statistics
+
             dev = statistics.stdev(self.small_win_gaps)
             rhythm_score = max(0, 30 - (dev * 2))
         else:
@@ -105,4 +107,6 @@ for ticket in range(1, sim.total_tickets + 1):
     if ticket % snapshot_every == 0:
         tracker.input_data(ticket, near_misses, small_win_gaps, sim.jackpot_claimed)
         score, rec = tracker.calculate_heat()
-        print(f"  Ticket #{ticket:>5} | Near Misses: {near_misses:>3} | Heat: {score:>5.1f}/100 | {rec}")
+        print(
+            f"  Ticket #{ticket:>5} | Near Misses: {near_misses:>3} | Heat: {score:>5.1f}/100 | {rec}"
+        )

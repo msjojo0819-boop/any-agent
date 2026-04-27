@@ -1,5 +1,6 @@
 import random
 
+
 class TexasBoxSimulator:
     def __init__(self):
         self.total_tickets = 10000
@@ -31,6 +32,7 @@ class TexasBoxSimulator:
             return "NEAR MISS"
 
         return "BLANK"
+
 
 # --- Run the Lab ---
 sim = TexasBoxSimulator()
