@@ -14,12 +14,9 @@ class TexasBoxSimulator:
 
     def pull_handle(self):
         self.current_ticket += 1
-        is_win = False
-        is_near_miss = False
 
         # 1. Check for Jackpot
         if self.current_ticket == self.jackpot_position:
-            is_win = True
             self.jackpot_claimed = True
             return "JACKPOT"
 
@@ -30,7 +27,6 @@ class TexasBoxSimulator:
         # 3. Check for 'Near Miss' (The Tease)
         # Logic: Only tease if the jackpot is still in the box
         if not self.jackpot_claimed and random.random() < 0.05:
-            is_near_miss = True
             self.near_miss_log.append(self.current_ticket)
             return "NEAR MISS"
 
@@ -38,7 +34,7 @@ class TexasBoxSimulator:
 
 # --- Run the Lab ---
 sim = TexasBoxSimulator()
-print(f"Simulating a 10,000 Ticket Box...")
+print("Simulating a 10,000 Ticket Box...")
 print(f"Target Jackpot is hidden at Ticket #{sim.jackpot_position}")
 
 # We will 'Snapshot' the machine at three stages: Start, Middle, and End

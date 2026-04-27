@@ -1,5 +1,4 @@
 import random
-import time
 
 class TexasBoxSimulator:
     def __init__(self):
@@ -73,8 +72,8 @@ class TexasHeatTracker:
 sim = TexasBoxSimulator()
 tracker = TexasHeatTracker()
 
-print(f"=== TEXAS BOX LIVE ===")
-print(f"Box: 10,000 Tickets")
+print("=== TEXAS BOX LIVE ===")
+print("Box: 10,000 Tickets")
 print(f"Jackpot hidden at #{sim.jackpot_position}")
 print()
 
@@ -91,7 +90,7 @@ for ticket in range(1, sim.total_tickets + 1):
         tracker.input_data(ticket, near_misses, small_win_gaps, True)
         score, rec = tracker.calculate_heat()
         print(f"  Heat: {score:.1f}/100 | {rec}")
-        print(f"\n=== BOX IS DEAD ===")
+        print("\n=== BOX IS DEAD ===")
         break
 
     if result == "NEAR MISS":
