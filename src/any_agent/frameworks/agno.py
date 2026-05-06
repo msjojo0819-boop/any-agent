@@ -3,7 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
-from any_llm import acompletion, completion, AnyLLM as AnyLLMClient
+from any_llm import AnyLLM as AnyLLMClient
+from any_llm import acompletion, completion
 
 from any_agent.config import AgentConfig, AgentFramework
 
