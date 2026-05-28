@@ -12,8 +12,7 @@ from any_agent.tools.file_upload import (
 
 
 def _make_tmpdir() -> str:
-    d = tempfile.mkdtemp()
-    return d
+    return tempfile.mkdtemp()
 
 
 def test_upload_file_basic() -> None:

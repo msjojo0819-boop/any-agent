@@ -4,19 +4,22 @@ import os
 import tempfile
 from pathlib import Path
 
-
 _DEFAULT_UPLOAD_DIR = os.path.join(tempfile.gettempdir(), "any_agent_uploads")
 
 _MAX_FILE_SIZE_BYTES = 50 * 1024 * 1024  # 50 MB
 
 
 def _get_upload_dir(upload_dir: str | None = None) -> Path:
-    directory = Path(upload_dir or os.environ.get("ANY_AGENT_UPLOAD_DIR", _DEFAULT_UPLOAD_DIR))
+    directory = Path(
+        upload_dir or os.environ.get("ANY_AGENT_UPLOAD_DIR", _DEFAULT_UPLOAD_DIR)
+    )
     directory.mkdir(parents=True, exist_ok=True)
     return directory
 
 
-def upload_file(file_name: str, content_base64: str, upload_dir: str | None = None) -> str:
+def upload_file(
+    file_name: str, content_base64: str, upload_dir: str | None = None
+) -> str:
     """Save a base64-encoded file to the upload directory.
 
     Args:
@@ -139,8 +142,5 @@ def get_file_info(file_path: str) -> str:
     stat = path.stat()
     mime = mimetypes.guess_type(path.name)[0] or "unknown"
     return (
-        f"Name: {path.name}\n"
-        f"Path: {path}\n"
-        f"Size: {stat.st_size} bytes\n"
-        f"Type: {mime}\n"
+        f"Name: {path.name}\nPath: {path}\nSize: {stat.st_size} bytes\nType: {mime}\n"
     )
