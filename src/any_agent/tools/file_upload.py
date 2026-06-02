@@ -10,9 +10,8 @@ _MAX_FILE_SIZE_BYTES = 50 * 1024 * 1024  # 50 MB
 
 
 def _get_upload_dir(upload_dir: str | None = None) -> Path:
-    directory = Path(
-        upload_dir or os.environ.get("ANY_AGENT_UPLOAD_DIR", _DEFAULT_UPLOAD_DIR)
-    )
+    resolved = upload_dir or os.environ.get("ANY_AGENT_UPLOAD_DIR") or _DEFAULT_UPLOAD_DIR
+    directory = Path(resolved)
     directory.mkdir(parents=True, exist_ok=True)
     return directory
 
